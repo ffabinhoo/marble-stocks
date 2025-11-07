@@ -6,8 +6,8 @@ import stocks from '../data/stocks.json';
 export default function Home() {
   return (
     <div style={{ padding: '20px' }}>
-      <Typography variant="h4" gutterBottom>
-        Financial Dashboard
+      <Typography variant="h5" gutterBottom>
+        
       </Typography>
       <Grid container spacing={1}> {/* Reduced spacing */}
         {stocks.map((stock, index) => (
