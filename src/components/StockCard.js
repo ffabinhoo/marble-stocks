@@ -5,8 +5,9 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 export default function StockCard({ stock }) {
   const { Ticker, Financials } = stock.financial_data;
 
-  // Sort by Year ascending
-  const data = [...Financials].sort((a, b) => a.Year - b.Year)
+  // Ordenar dados por ano
+  const data = [...Financials]
+    .sort((a, b) => a.Year - b.Year)
     .map(f => ({ year: f.Year, netIncome: f.netIncome }));
 
   return (
@@ -15,7 +16,9 @@ export default function StockCard({ stock }) {
         backgroundColor: '#1e1e1e',
         color: '#fff',
         width: '100%',
+        maxWidth: '350px',   // largura máxima fixa do card
         minHeight: '450px',
+        margin: '0 auto',    // centraliza o card dentro do grid item
         borderRadius: '16px',
         padding: '16px',
         display: 'flex',
@@ -24,11 +27,26 @@ export default function StockCard({ stock }) {
       }}
     >
       <CardContent sx={{ flex: '1 1 auto' }}>
+        {/* Nome do stock quebrando linha se for longo */}
+        <Typography
+          variant="h6"
+          gutterBottom
+          sx={{
+            whiteSpace: 'normal',
+            overflowWrap: 'anywhere',
+            wordBreak: 'break-word',
+            width: '100%',
+          }}
+        >
+          {stock.info.longName}
+        </Typography>
+
         <Typography variant="h6" gutterBottom>{Ticker}</Typography>
         <Typography variant="body1">Last Price: ${stock.lastPrice.toFixed(2)}</Typography>
         <Typography variant="body2" sx={{ color: 'lightgreen', marginBottom: '10px' }}>
           Net Income Trend (10 Years)
         </Typography>
+
         <div style={{ flexGrow: 1, height: '300px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data}>
@@ -39,7 +57,7 @@ export default function StockCard({ stock }) {
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#2c2c2c', // Dark background
+                  backgroundColor: '#2c2c2c',
                   color: '#fff',
                   borderRadius: '8px',
                   border: 'none'

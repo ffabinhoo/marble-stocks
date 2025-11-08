@@ -1,27 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import StockCard from '../components/StockCard';
-import stocks from '../data/stocks.json';
 
 export default function Home() {
+  const [stocks, setStocks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const dataUrl = "https://finance-files-servless-fabio.s3.us-east-1.amazonaws.com/stocks-au.json";
+
+    fetch(dataUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao carregar dados do S3");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setStocks(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar dados:", error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div style={{ padding: '20px' }}>
+        <Typography variant="body1">Carregando dados...</Typography>
+      </div>
+    );
+  }
+
   return (
     <div style={{ padding: '20px' }}>
       <Typography variant="h5" gutterBottom>
-        
+        Stocks
       </Typography>
-      <Grid container spacing={1}> {/* Reduced spacing */}
-        {stocks.map((stock, index) => (
-          <Grid
-            item
-            xs={6}   // 2 cards per row on small screens
-            sm={4}   // 3 cards per row on medium screens
-            md={3}   // 4 cards per row on large screens
-            key={index}
-          >
-            <StockCard stock={stock} />
-          </Grid>
-        ))}
-      </Grid>
+      <Grid container spacing={2} justifyContent="center">
+  {stocks.map((stock, index) => (
+    <Grid
+      item
+      key={index}
+      sx={{ flex: '0 0 33.33%', maxWidth: '350px', padding: '8px' }}
+    >
+      <StockCard stock={stock} />
+    </Grid>
+  ))}
+</Grid>
+
     </div>
   );
 }
