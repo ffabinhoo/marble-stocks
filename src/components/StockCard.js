@@ -16,9 +16,9 @@ export default function StockCard({ stock }) {
         backgroundColor: '#1e1e1e',
         color: '#fff',
         width: '100%',
-        maxWidth: '350px',   // largura máxima fixa do card
+        maxWidth: '400px',   // largura máxima do card aumentada
         minHeight: '450px',
-        margin: '0 auto',    // centraliza o card dentro do grid item
+        margin: '0 auto',    // centraliza o card
         borderRadius: '16px',
         padding: '16px',
         display: 'flex',
@@ -32,9 +32,9 @@ export default function StockCard({ stock }) {
           variant="h6"
           gutterBottom
           sx={{
-            whiteSpace: 'normal',
-            overflowWrap: 'anywhere',
-            wordBreak: 'break-word',
+            whiteSpace: 'normal',       // permite múltiplas linhas
+            overflowWrap: 'anywhere',   // força quebra de palavras longas
+            wordBreak: 'break-word',    // compatibilidade extra
             width: '100%',
           }}
         >
