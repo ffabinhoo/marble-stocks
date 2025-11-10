@@ -7,7 +7,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const dataUrl = "https://finance-files-servless-fabio.s3.us-east-1.amazonaws.com/stocks-au.json";
+    const dataUrl = "https://finance-files-servless-fabio.s3.us-east-1.amazonaws.com/stocks-us.json";
 
     fetch(dataUrl)
       .then((response) => {

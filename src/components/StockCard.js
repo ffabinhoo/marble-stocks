@@ -43,6 +43,7 @@ export default function StockCard({ stock }) {
 
         <Typography variant="h6" gutterBottom>{Ticker}</Typography>
         <Typography variant="body1">Last Price: ${stock.lastPrice.toFixed(2)}</Typography>
+        <Typography variant="body1" gutterBottom>{stock.info.sectorDisp}</Typography>
         <Typography variant="body2" sx={{ color: 'lightgreen', marginBottom: '10px' }}>
           Net Income Trend (10 Years)
         </Typography>
