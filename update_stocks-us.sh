@@ -24,14 +24,20 @@ for ((i=0; i<${#tickers[@]}; i++)); do
   ticker=$(echo "${tickers[$i]}" | xargs) # Trim spaces
   echo "Fetching data for $ticker..."
 
-  # Call API and append JSON to temp file
-  curl -s "$BASE_URL/$ticker" >> "$TEMP_FILE"
-
-  # Add comma if not last element
-  if [ $i -lt $(( ${#tickers[@]} - 1 )) ]; then
-    echo "," >> "$TEMP_FILE"
+  # Call API and capture response + status
+  response=$(curl -s -w "%{http_code}" -o temp_response.json "$BASE_URL/$ticker")
+  
+  if [ "$response" -eq 200 ]; then
+    cat temp_response.json >> "$TEMP_FILE"
+    # Add comma if not last element
+    if [ $i -lt $(( ${#tickers[@]} - 1 )) ]; then
+      echo "," >> "$TEMP_FILE"
+    fi
+  else
+    echo "Skipping $ticker due to error (HTTP $response)"
   fi
 done
+
 
 echo "]" >> "$TEMP_FILE"
 
