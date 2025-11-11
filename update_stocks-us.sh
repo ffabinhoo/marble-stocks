@@ -28,7 +28,8 @@ for ((i=0; i<${#tickers[@]}; i++)); do
   response=$(curl -s -w "%{http_code}" -o temp_response.json "$BASE_URL/$ticker")
 
   # 2. Substitui todos os NaN por null no arquivo JSON
-  jq 'walk(if . == nan then null else . end)' temp_response.json > cleaned_response.json
+  perl -pi -e 's/: *NaN(,|\})/: null\1/g' temp_response.json
+
 
 
   
