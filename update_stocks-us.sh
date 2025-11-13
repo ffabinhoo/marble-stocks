@@ -47,13 +47,21 @@ done
 
 echo "]" >> "$TEMP_FILE"
 
+
+# Remove trailing comma before closing bracket
+#sed -i '' 's/,]$/]/' "$TEMP_FILE"   # macOS (BSD sed)
+# For Linux, use:
+sed -i 's/,]$/]/' "$TEMP_FILE"
+
+
+
 # Move temp file to stocks.json
 mv "$TEMP_FILE" "$DATA_FILE"
 
 # Se o move foi bem-sucedido, faz upload para S3
 if [ $? -eq 0 ]; then
     echo "Upload to S3..."
-    aws s3 cp "$DATA_FILE" s3://finance-files-servless-fabio/ --acl public-read
+    aws s3 cp "$DATA_FILE" s3://finance-files-servless-fabio/ --acl public-read --profile fabio
     echo "Upload completed!"
 else
     echo "Error: Failed to move file, skipping S3 upload."
