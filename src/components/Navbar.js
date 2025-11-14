@@ -10,8 +10,8 @@ export default function Navbar() {
           Finance Dashboard
         </Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>
-        <Button color="inherit" component={Link} to="/asx">Australia(ASX)</Button>
-        <Button color="inherit" component={Link} to="/usa">US Market (Nasdaq + NYSE)</Button>
+        <Button color="inherit" component={Link} to="/asx">Australia(ASX) Stocks</Button>
+        <Button color="inherit" component={Link} to="/usa">US Stocks</Button>
         <Button color="inherit" component={Link} to="/about">About</Button>
       </Toolbar>
     </AppBar>
